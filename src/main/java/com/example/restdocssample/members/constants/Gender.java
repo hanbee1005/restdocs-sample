@@ -1,4 +1,4 @@
-package com.example.restdocssample.constants;
+package com.example.restdocssample.members.constants;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

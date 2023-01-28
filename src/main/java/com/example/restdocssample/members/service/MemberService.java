@@ -1,12 +1,12 @@
-package com.example.restdocssample.service;
+package com.example.restdocssample.members.service;
 
-import com.example.restdocssample.domain.Member;
+import com.example.restdocssample.members.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.example.restdocssample.constants.Gender.*;
+import static com.example.restdocssample.members.constants.Gender.*;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +18,7 @@ public class MemberService {
 
     public Member findOne(Long memberId) {
         return Member.builder()
+                .id(memberId)
                 .name("memberA")
                 .age(10)
                 .gender(M)
