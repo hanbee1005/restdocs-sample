@@ -13,6 +13,7 @@ public class MemberResponse {
     private String name;
     private Gender gender;
     private Integer age;
+    private String birthdate;
     private List<String> hobby;
     private List<AddressDto> address;
     private MemberPersonalDto personal;

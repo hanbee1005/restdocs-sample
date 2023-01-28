@@ -161,5 +161,37 @@ this.mockMvc.perform(get("/user/5").accept(MediaType.APPLICATION_JSON))
     |===
     ```
 - 입력 포맷 지정
+  - attribute 로 사용될 key, value 를 static 으로 지정합니다. (자주 쓰는 경우)
+    ```
+    import org.springframework.restdocs.snippet.Attributes;
+    import static org.springframework.restdocs.snippet.Attributes.key;
+
+    public interface DocumentFormatGenerator {
+    
+        static Attributes.Attribute getDateFormat() { // (2)
+            return key("format").value("yyyy-MM-dd");
+        }
+    }
+    ```
+  - attributes() 속성을 추가합니다.
+    ```
+    fieldWithPath("birthdate").type(JsonFieldType.STRING).description("생년월일").attributes(getDateFormat())
+    ```
+  - 이후 이것이 표시될 snippet 을 수정합니다.
+    ```
+    |===
+    |Name|Type|Description|Optional|Format
+    
+    {{#fields}}
+    |{{#tableCellContent}}`+{{path}}+`{{/tableCellContent}}
+    |{{#tableCellContent}}`+{{type}}+`{{/tableCellContent}}
+    |{{#tableCellContent}}{{description}}{{/tableCellContent}}
+    |{{#tableCellContent}}{{optional}}{{/tableCellContent}}
+    |{{#tableCellContent}}{{#format}}{{.}}{{/format}}{{/tableCellContent}}
+    
+    {{/fields}}
+    
+    |===
+    ```
 - 입력 코드 표기
 - 공통 포맷 지정

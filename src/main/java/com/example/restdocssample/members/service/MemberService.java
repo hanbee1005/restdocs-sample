@@ -26,6 +26,7 @@ public class MemberService {
                 .name("memberA")
                 .age(10)
                 .gender(M)
+                .birthdate("1995-10-05")
                 .hobby(List.of("photo", "bike"))
                 .address(List.of(
                         AddressDto.builder().type(Address.HOME).sido("서울").sigungu("강서구").road("화곡로").build(),

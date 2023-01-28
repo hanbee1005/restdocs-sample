@@ -1,11 +1,12 @@
 |===
-|Name|Type|Optional|Description
+|Name|Type|Description|Optional|Format
 
 {{#fields}}
 |{{#tableCellContent}}`+{{path}}+`{{/tableCellContent}}
 |{{#tableCellContent}}`+{{type}}+`{{/tableCellContent}}
-|{{#tableCellContent}}`+{{optional}}+`{{/tableCellContent}}
 |{{#tableCellContent}}{{description}}{{/tableCellContent}}
+|{{#tableCellContent}}{{optional}}{{/tableCellContent}}
+|{{#tableCellContent}}{{#format}}{{.}}{{/format}}{{/tableCellContent}}
 
 {{/fields}}
 

@@ -21,6 +21,7 @@ import java.util.List;
 import static com.example.restdocssample.members.constants.Gender.M;
 import static com.example.restdocssample.utils.ApiDocumentUtils.getDocumentRequest;
 import static com.example.restdocssample.utils.ApiDocumentUtils.getDocumentResponse;
+import static com.example.restdocssample.utils.DocumentFormatGenerator.getDateFormat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -52,6 +53,7 @@ class MemberControllerTest {
                 .name("memberA")
                 .age(10)
                 .gender(M)
+                .birthdate("1995-10-05")
                 .hobby(List.of("photo", "bike"))
                 .address(List.of(
                         AddressDto.builder().type(Address.HOME).sido("서울").sigungu("강서구").road("화곡로").build(),
@@ -79,6 +81,7 @@ class MemberControllerTest {
                                 fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
                                 fieldWithPath("gender").type(JsonFieldType.STRING).description("성별"),
                                 fieldWithPath("age").type(JsonFieldType.NUMBER).description("나이").optional(),
+                                fieldWithPath("birthdate").type(JsonFieldType.STRING).description("생년월일").attributes(getDateFormat()),
                                 fieldWithPath("hobby").type(JsonFieldType.ARRAY).description("취미"),
                                 fieldWithPath("address").type(JsonFieldType.ARRAY).description("주소"),
                                 fieldWithPath("address[].type").type(JsonFieldType.STRING).description("주소 타입"),
