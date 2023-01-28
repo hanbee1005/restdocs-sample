@@ -1,7 +1,7 @@
 package com.example.restdocssample.members.adapter.in;
 
-import com.example.restdocssample.members.domain.Member;
 import com.example.restdocssample.members.service.MemberService;
+import com.example.restdocssample.members.service.model.MemberResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/{memberId}")
-    public ResponseEntity<Member> findOne(@PathVariable Long memberId) {
+    public ResponseEntity<MemberResponse> findOne(@PathVariable Long memberId) {
         return ResponseEntity.ok(memberService.findOne(memberId));
     }
 }

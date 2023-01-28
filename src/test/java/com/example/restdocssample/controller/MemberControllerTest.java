@@ -1,8 +1,11 @@
 package com.example.restdocssample.controller;
 
-import com.example.restdocssample.members.domain.Member;
+import com.example.restdocssample.members.constants.Address;
 import com.example.restdocssample.members.adapter.in.MemberController;
 import com.example.restdocssample.members.service.MemberService;
+import com.example.restdocssample.members.service.model.AddressDto;
+import com.example.restdocssample.members.service.model.MemberPersonalDto;
+import com.example.restdocssample.members.service.model.MemberResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+
+import java.util.List;
 
 import static com.example.restdocssample.members.constants.Gender.M;
 import static com.example.restdocssample.utils.ApiDocumentUtils.getDocumentRequest;
@@ -42,11 +47,16 @@ class MemberControllerTest {
         // given
         Long memberId = 1L;
 
-        Member member = Member.builder()
+        MemberResponse member = MemberResponse.builder()
                 .id(memberId)
                 .name("memberA")
                 .age(10)
                 .gender(M)
+                .hobby(List.of("photo", "bike"))
+                .address(List.of(
+                        AddressDto.builder().type(Address.HOME).sido("서울").sigungu("강서구").road("화곡로").build(),
+                        AddressDto.builder().type(Address.OFFICE).sido("서울").sigungu("강남구").road("태해란로").build()))
+                .personal(MemberPersonalDto.builder().phoneNumber("01012345678").email("hello@gmail.com").build())
                 .build();
 
         given(memberService.findOne(any())).willReturn(member);
@@ -68,7 +78,16 @@ class MemberControllerTest {
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("회원 아이디"),
                                 fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
                                 fieldWithPath("gender").type(JsonFieldType.STRING).description("성별"),
-                                fieldWithPath("age").type(JsonFieldType.NUMBER).description("나이")
+                                fieldWithPath("age").type(JsonFieldType.NUMBER).description("나이"),
+                                fieldWithPath("hobby").type(JsonFieldType.ARRAY).description("취미"),
+                                fieldWithPath("address").type(JsonFieldType.ARRAY).description("주소"),
+                                fieldWithPath("address[].type").type(JsonFieldType.STRING).description("주소 타입"),
+                                fieldWithPath("address[].sido").type(JsonFieldType.STRING).description("시도명"),
+                                fieldWithPath("address[].sigungu").type(JsonFieldType.STRING).description("시군구명"),
+                                fieldWithPath("address[].road").type(JsonFieldType.STRING).description("도로명"),
+                                fieldWithPath("personal").type(JsonFieldType.OBJECT).description("개인정보"),
+                                fieldWithPath("personal.phoneNumber").type(JsonFieldType.STRING).description("전화번호"),
+                                fieldWithPath("personal.email").type(JsonFieldType.STRING).description("이메일")
                         )
                 ))
                 .andDo(print());

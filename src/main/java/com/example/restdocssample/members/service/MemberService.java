@@ -1,6 +1,10 @@
 package com.example.restdocssample.members.service;
 
+import com.example.restdocssample.members.constants.Address;
 import com.example.restdocssample.members.domain.Member;
+import com.example.restdocssample.members.service.model.AddressDto;
+import com.example.restdocssample.members.service.model.MemberPersonalDto;
+import com.example.restdocssample.members.service.model.MemberResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +20,17 @@ public class MemberService {
         return makeDummyMember();
     }
 
-    public Member findOne(Long memberId) {
-        return Member.builder()
+    public MemberResponse findOne(Long memberId) {
+        return MemberResponse.builder()
                 .id(memberId)
                 .name("memberA")
                 .age(10)
                 .gender(M)
+                .hobby(List.of("photo", "bike"))
+                .address(List.of(
+                        AddressDto.builder().type(Address.HOME).sido("서울").sigungu("강서구").road("화곡로").build(),
+                        AddressDto.builder().type(Address.OFFICE).sido("서울").sigungu("강남구").road("태해란로").build()))
+                .personal(MemberPersonalDto.builder().phoneNumber("01012345678").email("hello@gmail.com").build())
                 .build();
     }
 
