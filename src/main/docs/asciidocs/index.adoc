@@ -1,0 +1,13 @@
+= Restdocs Sample API
+Hanbee Son <ent-bc.com>
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:sectlinks:
+:sectnums:
+
+Restdocs Sample API 인터페이스 문서
+
+include::members.adoc[]

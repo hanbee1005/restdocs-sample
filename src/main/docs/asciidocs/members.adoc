@@ -1,0 +1,24 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+= Members
+
+include::service-url.adoc[]
+
+== [small]#회원 단건 조회#
+[red big]#Overview#
+----
+회원 ID를 통해 회원을 단건 조회하는 API 입니다.
+----
+[red big]#HTTP request#
+include::{snippets}/members/find-by-id/http-request.adoc[]
+
+[red big]#Path Parameters#
+include::{snippets}/members/find-by-id/path-parameters.adoc[]
+
+[red big]#HTTP response#
+include::{snippets}/members/find-by-id/http-response.adoc[]
+
+[red big]#Response fields#
+include::{snippets}/members/find-by-id/response-fields.adoc[]

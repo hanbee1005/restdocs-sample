@@ -143,3 +143,23 @@ this.mockMvc.perform(get("/user/5").accept(MediaType.APPLICATION_JSON))
 ```
 
 ## 개선 사항
+- 필수값 여부
+  - ```.optional()```을 붙여서 필수값  여부를 지정할 수 있고 이를 표시하기 위한 스니펫 커스터마이징을 해야합니다.
+  - request-fields 의 스니펫을 customizing 하려면 ```src/test/resources/org/springframework/restdocs/templates``` 경로에 ```request-fields.snippet``` 파일을 추가하면 됩니다.
+    ```
+    |===
+    |Name|Type|Optional|Description
+    
+    {{#fields}}
+    |{{#tableCellContent}}`+{{path}}+`{{/tableCellContent}}
+    |{{#tableCellContent}}`+{{type}}+`{{/tableCellContent}}
+    |{{#tableCellContent}}`+{{optional}}+`{{/tableCellContent}}
+    |{{#tableCellContent}}{{description}}{{/tableCellContent}}
+    
+    {{/fields}}
+    
+    |===
+    ```
+- 입력 포맷 지정
+- 입력 코드 표기
+- 공통 포맷 지정

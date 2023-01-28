@@ -1,0 +1,14 @@
+Service domain
+
+|===
+|Step |Host
+
+|dev
+|https://dev.host/sample
+
+|stg
+|https://stg.host/sample
+
+|prd
+|https://host/sample
+|===

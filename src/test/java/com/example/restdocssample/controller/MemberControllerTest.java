@@ -78,14 +78,14 @@ class MemberControllerTest {
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("회원 아이디"),
                                 fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
                                 fieldWithPath("gender").type(JsonFieldType.STRING).description("성별"),
-                                fieldWithPath("age").type(JsonFieldType.NUMBER).description("나이"),
+                                fieldWithPath("age").type(JsonFieldType.NUMBER).description("나이").optional(),
                                 fieldWithPath("hobby").type(JsonFieldType.ARRAY).description("취미"),
                                 fieldWithPath("address").type(JsonFieldType.ARRAY).description("주소"),
                                 fieldWithPath("address[].type").type(JsonFieldType.STRING).description("주소 타입"),
                                 fieldWithPath("address[].sido").type(JsonFieldType.STRING).description("시도명"),
                                 fieldWithPath("address[].sigungu").type(JsonFieldType.STRING).description("시군구명"),
                                 fieldWithPath("address[].road").type(JsonFieldType.STRING).description("도로명"),
-                                fieldWithPath("personal").type(JsonFieldType.OBJECT).description("개인정보"),
+                                fieldWithPath("personal").type(JsonFieldType.OBJECT).description("개인정보").optional(),
                                 fieldWithPath("personal.phoneNumber").type(JsonFieldType.STRING).description("전화번호"),
                                 fieldWithPath("personal.email").type(JsonFieldType.STRING).description("이메일")
                         )
