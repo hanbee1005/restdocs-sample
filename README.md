@@ -69,5 +69,77 @@ public interface ApiDocumentUtils {
 (3) 문서의 response 를 예쁘게 출력하기 위해 사용합니다.
 
 ## 기본 작성법
+[Spring Restdocs 문서](https://docs.spring.io/spring-restdocs/docs/1.0.0.BUILD-SNAPSHOT/reference/html5/#documenting-your-api)
+### Snippet 구조
+- 일반 String, Number
+  - 기본 String 은 type 을 JsonFieldType.STRING 으로 지정하면 되고
+  - 숫자 타입(int, long 등)은 JsonFieldType.NUMBER 으로 지정하면 됩니다.
+  ```
+  fieldWithPath("id").type(JsonFieldType.NUMBER).description("회원 아이디"),
+  fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
+  fieldWithPath("gender").type(JsonFieldType.STRING).description("성별"),
+  fieldWithPath("age").type(JsonFieldType.NUMBER).description("나이")
+  ```
+- Object
+  - 객체 내 각 필드들을 .을 찍어서 이어 붙여 표시합니다.
+  ```
+  fieldWithPath("personal").type(JsonFieldType.OBJECT).description("개인정보"),
+  fieldWithPath("personal.phoneNumber").type(JsonFieldType.STRING).description("전화번호"),
+  fieldWithPath("personal.email").type(JsonFieldType.STRING).description("이메일")
+  ```
+- Array
+  - List 내 값이 일반 Integer, String 등이라고 한다면 JsonFieldType.ARRAY 하나만 사용하면 되고
+  - List 내 값이 또 다른 객체라면 객체 내 값들의 필드 이름과 타입을 차례대로 지정하면 됩니다.
+  ```
+  fieldWithPath("hobby").type(JsonFieldType.ARRAY).description("취미"),
+  
+  fieldWithPath("address").type(JsonFieldType.ARRAY).description("주소"),
+  fieldWithPath("address[].type").type(JsonFieldType.STRING).description("주소 타입"),
+  fieldWithPath("address[].sido").type(JsonFieldType.STRING).description("시도명"),
+  fieldWithPath("address[].sigungu").type(JsonFieldType.STRING).description("시군구명"),
+  fieldWithPath("address[].road").type(JsonFieldType.STRING).description("도로명")
+  ```
 
-## 
+### Path Variable 설정
+***org.springframework.restdocs.request.RequestDocumentation.pathParameters;*** 사용
+```
+this.mockMvc.perform(get("/locations/{latitude}/{longitude}", 51.5072, 0.1275)) 
+    .andExpect(status().isOk())
+    .andDo(document("locations", pathParameters( 
+            parameterWithName("latitude").description("The location's latitude"), 
+            parameterWithName("longitude").description("The location's longitude") 
+    )));
+```
+
+### Query Param 설정
+***org.springframework.restdocs.request.RequestDocumentation.requestParameters;*** 사용
+```
+this.mockMvc.perform(get("/users?page=2&per_page=100")) 
+    .andExpect(status().isOk())
+    .andDo(document("users", requestParameters( 
+            parameterWithName("page").description("The page to retrieve"), 
+            parameterWithName("per_page").description("Entries per page") 
+    )));
+```
+
+### Request Body 설정
+***org.springframework.restdocs.request.RequestDocumentation.requestParameters;*** 사용
+```
+this.mockMvc.perform(post("/users").param("username", "Tester")) 
+    .andExpect(status().isCreated())
+    .andDo(document("create-user", requestParameters(
+            parameterWithName("username").description("The user's username")
+    )));
+```
+
+### Response Body 설정
+***org.springframework.restdocs.payload.PayloadDocumentation.responseFields;*** 사용
+```
+this.mockMvc.perform(get("/user/5").accept(MediaType.APPLICATION_JSON))
+    .andExpect(status().isOk())
+    .andDo(document("index", responseFields( 
+            fieldWithPath("contact").description("The user's contact details"), 
+            fieldWithPath("contact.email").description("The user's email address"))));
+```
+
+## 개선 사항
