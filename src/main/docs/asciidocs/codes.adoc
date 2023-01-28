@@ -1,0 +1,8 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+= Enum List
+
+include::{snippets}/common/enum-response-fields-genders.adoc[]
+include::{snippets}/common/enum-response-fields-address.adoc[]

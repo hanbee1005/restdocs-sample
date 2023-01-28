@@ -194,4 +194,81 @@ this.mockMvc.perform(get("/user/5").accept(MediaType.APPLICATION_JSON))
     |===
     ```
 - 입력 코드 표기
+  - enum list 를 반환하는 controller 를 test 패키지에 생성한 뒤 이를 호출하는 테스트를 작성합니다.
+    ```
+    @WebMvcTest(EnumViewController.class)
+    @AutoConfigureRestDocs
+    public class CommonDocumentationTest {
+    @Autowired
+    private MockMvc mockMvc;
+    
+        @Test
+        @DisplayName("enum 목록 조회")
+        public void enums() throws Exception {
+            // given
+            this.mockMvc.perform(get("/codes").accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andDo(document("common",
+                            customResponseFields("enum-response", beneathPath("genders").withSubsectionId("genders"), // (2)
+                                    attributes(key("title").value("성별")),
+                                    enumConvertFieldDescriptor(Gender.values())
+                            ),
+                            customResponseFields("enum-response", beneathPath("address").withSubsectionId("address"), // (2)
+                                    attributes(key("title").value("주소")),
+                                    enumConvertFieldDescriptor(Address.values())
+                            )
+                    ));
+        }
+    
+        private FieldDescriptor[] enumConvertFieldDescriptor(EnumType[] enumTypes) {
+            return Arrays.stream(enumTypes)
+                    .map(enumType -> fieldWithPath(enumType.getCode()).description(enumType.getDesc()))
+                    .toArray(FieldDescriptor[]::new);
+        }
+    
+        public static CustomResponseFieldsSnippet customResponseFields(String type,
+                                                                       PayloadSubsectionExtractor<?> subsectionExtractor,
+                                                                       Map<String, Object> attributes, FieldDescriptor... descriptors) {
+            return new CustomResponseFieldsSnippet(type, subsectionExtractor, Arrays.asList(descriptors), attributes
+                    , true);
+        }
+    }
+    ```
+  - response-fields 스니펫을 이미 선언했기에 모든 응답필드는 해당 response-fields 를 사용하게 됩니다.
+    그렇게 되면 불필요한 포맷과 필수 여부가 테이블에 나타나서 보기가 안좋습니다.
+    그래서 특정 이름의 스니펫을 사용할수 있게 CustomResponseFieldsSnippet 를 만들었습니다.
+    ```
+    public class CustomResponseFieldsSnippet extends AbstractFieldsSnippet {
+
+        public CustomResponseFieldsSnippet(String type, PayloadSubsectionExtractor<?> subsectionExtractor,
+                                           List<FieldDescriptor> descriptors, Map<String, Object> attributes,
+                                           boolean ignoreUndocumentedFields) {
+            super(type, descriptors, attributes, ignoreUndocumentedFields,
+                    subsectionExtractor);
+        }
+    
+        @Override
+        protected MediaType getContentType(Operation operation) {
+            return operation.getResponse().getHeaders().getContentType();
+        }
+    
+        @Override
+        protected byte[] getContent(Operation operation) throws IOException {
+            return operation.getResponse().getContent();
+        }
+    }
+    ```
+    enum-response-fields.snippet
+    ```
+    {{title}}
+    |===
+    |코드|코드명
+  
+    {{#fields}}
+    |{{#tableCellContent}}`+{{path}}+`{{/tableCellContent}}
+    |{{#tableCellContent}}{{description}}{{/tableCellContent}}
+  
+    {{/fields}}
+    |===
+    ```
 - 공통 포맷 지정
