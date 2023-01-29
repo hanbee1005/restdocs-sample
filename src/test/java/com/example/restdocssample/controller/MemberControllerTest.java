@@ -77,7 +77,7 @@ class MemberControllerTest extends ApiDocumentationTest {
                                 beneathPath("data").withSubsectionId("data"),
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("회원 아이디"),
                                 fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
-                                fieldWithPath("gender").type(JsonFieldType.STRING).description("<<gender,성별 코드>>"),
+                                fieldWithPath("gender").type(JsonFieldType.STRING).description("link:#gender[성별 코드,window=\"_blank\"]"),
                                 fieldWithPath("age").type(JsonFieldType.NUMBER).description("나이").optional(),
                                 fieldWithPath("birthdate").type(JsonFieldType.STRING).description("생년월일").attributes(getDateFormat()),
                                 fieldWithPath("hobby").type(JsonFieldType.ARRAY).description("취미"),
