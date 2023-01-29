@@ -272,3 +272,26 @@ this.mockMvc.perform(get("/user/5").accept(MediaType.APPLICATION_JSON))
     |===
     ```
 - 공통 포맷 지정
+  - 공통 포맷만 반환하는 컨트롤러를 만들고 이에 대한 테스트를 작성합니다.
+    ```
+    resultActions.andExpect(status().isOk())
+                .andDo(document(documentPath,
+                        customResponseFields("common-response", null,
+                                attributes(key("title").value("공통 응답")),
+                                fieldWithPath("code").type(JsonFieldType.STRING).description("결과 코드"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("결과 메시지"),
+                                subsectionWithPath("data").description("데이터"))))
+                .andDo(print());
+    ```
+  - 이후 공통 포맷이 쓰이는 api에 다음과 같이 추가를 해줍니다.
+    ```
+    resultActions.andExpect(status().isOk())
+                .andDo(document("members/find-by-id",
+                        ...
+                        responseFields(
+                                beneathPath("data").withSubsectionId("data"),
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("회원 아이디"),
+                                fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
+                                fieldWithPath("gender").type(JsonFieldType.STRING).description("성별"),
+    ...
+    ```

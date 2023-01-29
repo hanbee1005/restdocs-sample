@@ -10,5 +10,6 @@ Hanbee Son <ent-bc.com>
 
 Restdocs Sample API 인터페이스 문서
 
+include::common.adoc[]
 include::members.adoc[]
 include::codes.adoc[]

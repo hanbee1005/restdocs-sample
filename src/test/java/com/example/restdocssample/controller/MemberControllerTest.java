@@ -26,8 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -66,8 +65,6 @@ class MemberControllerTest {
         // when
         ResultActions resultActions = mockMvc.perform(get("/v1/members/{memberId}", memberId));
 
-        System.out.println(resultActions.andReturn().getResponse().getContentAsString());
-
         // then
         resultActions.andExpect(status().isOk())
                 .andDo(document("members/find-by-id",
@@ -77,6 +74,7 @@ class MemberControllerTest {
                                 parameterWithName("memberId").description("회원 아이디")
                         ),
                         responseFields(
+                                beneathPath("data").withSubsectionId("data"),
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("회원 아이디"),
                                 fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
                                 fieldWithPath("gender").type(JsonFieldType.STRING).description("성별"),

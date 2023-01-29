@@ -1,0 +1,5 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+include::{snippets}/common/common-response-fields.adoc[]
