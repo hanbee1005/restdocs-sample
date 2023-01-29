@@ -1,7 +1,5 @@
 package com.example.restdocssample.controller;
 
-import com.example.restdocssample.api.controller.CommonController;
-import com.example.restdocssample.codes.adapter.in.CodeRestController;
 import com.example.restdocssample.common.ApiDocumentationTest;
 import com.example.restdocssample.members.constants.Address;
 import com.example.restdocssample.members.adapter.in.MemberController;
@@ -11,12 +9,9 @@ import com.example.restdocssample.members.service.model.MemberPersonalDto;
 import com.example.restdocssample.members.service.model.MemberResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.restdocs.payload.JsonFieldType;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
@@ -25,6 +20,9 @@ import static com.example.restdocssample.members.constants.Gender.M;
 import static com.example.restdocssample.utils.ApiDocumentUtils.getDocumentRequest;
 import static com.example.restdocssample.utils.ApiDocumentUtils.getDocumentResponse;
 import static com.example.restdocssample.utils.DocumentFormatGenerator.getDateFormat;
+import static com.example.restdocssample.utils.DocumentLinkGenerator.DocUrl.ADDRESS;
+import static com.example.restdocssample.utils.DocumentLinkGenerator.DocUrl.GENDER;
+import static com.example.restdocssample.utils.DocumentLinkGenerator.generateLinkCode;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -77,11 +75,11 @@ class MemberControllerTest extends ApiDocumentationTest {
                                 beneathPath("data").withSubsectionId("data"),
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("회원 아이디"),
                                 fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
-                                fieldWithPath("gender").type(JsonFieldType.STRING).description("link:#gender[성별 코드,window=\"_blank\"]"),
+                                fieldWithPath("gender").type(JsonFieldType.STRING).description(generateLinkCode(GENDER)),
                                 fieldWithPath("age").type(JsonFieldType.NUMBER).description("나이").optional(),
                                 fieldWithPath("birthdate").type(JsonFieldType.STRING).description("생년월일").attributes(getDateFormat()),
                                 fieldWithPath("hobby").type(JsonFieldType.ARRAY).description("취미"),
-                                fieldWithPath("address").type(JsonFieldType.ARRAY).description("<<address,주소 코드>>"),
+                                fieldWithPath("address").type(JsonFieldType.ARRAY).description(generateLinkCode(ADDRESS)),
                                 fieldWithPath("address[].type").type(JsonFieldType.STRING).description("주소 타입"),
                                 fieldWithPath("address[].sido").type(JsonFieldType.STRING).description("시도명"),
                                 fieldWithPath("address[].sigungu").type(JsonFieldType.STRING).description("시군구명"),

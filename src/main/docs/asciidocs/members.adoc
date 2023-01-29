@@ -4,8 +4,6 @@ endif::[]
 
 = Members
 
-include::service-url.adoc[]
-
 == [small]#회원 단건 조회#
 [red big]#Overview#
 ----

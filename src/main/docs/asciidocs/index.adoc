@@ -7,9 +7,13 @@ Hanbee Son <ent-bc.com>
 :toclevels: 3
 :sectlinks:
 :sectnums:
+:docinfo: shared-head
 
 Restdocs Sample API 인터페이스 문서
 
+= 공통 사항
+
+include::service-url.adoc[]
 include::common.adoc[]
+
 include::members.adoc[]
-include::codes.adoc[]
