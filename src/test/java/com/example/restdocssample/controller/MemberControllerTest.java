@@ -1,5 +1,8 @@
 package com.example.restdocssample.controller;
 
+import com.example.restdocssample.api.controller.CommonController;
+import com.example.restdocssample.codes.adapter.in.CodeRestController;
+import com.example.restdocssample.common.ApiDocumentationTest;
 import com.example.restdocssample.members.constants.Address;
 import com.example.restdocssample.members.adapter.in.MemberController;
 import com.example.restdocssample.members.service.MemberService;
@@ -33,11 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MemberController.class)
-@AutoConfigureRestDocs
-class MemberControllerTest {
-    @Autowired
-    private MockMvc mockMvc;
-
+class MemberControllerTest extends ApiDocumentationTest {
     @MockBean
     private MemberService memberService;
 
@@ -45,6 +44,7 @@ class MemberControllerTest {
     @DisplayName("회원 단건 조회")
     public void findOne() throws Exception {
         // given
+        String url = API_V1 + "/members/{memberId}";
         Long memberId = 1L;
 
         MemberResponse member = MemberResponse.builder()
@@ -63,7 +63,7 @@ class MemberControllerTest {
         given(memberService.findOne(any())).willReturn(member);
 
         // when
-        ResultActions resultActions = mockMvc.perform(get("/v1/members/{memberId}", memberId));
+        ResultActions resultActions = mockMvc.perform(get(url, memberId));
 
         // then
         resultActions.andExpect(status().isOk())

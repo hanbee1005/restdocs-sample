@@ -4,6 +4,8 @@ import com.example.restdocssample.api.controller.CommonController;
 import com.example.restdocssample.codes.adapter.in.CodeRestController;
 import com.example.restdocssample.codes.service.CodeQueryService;
 import com.example.restdocssample.codes.service.model.BaseCode;
+import com.example.restdocssample.common.ApiDocumentationTest;
+import com.example.restdocssample.members.adapter.in.MemberController;
 import com.example.restdocssample.utils.CustomResponseFieldsSnippet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,12 +33,8 @@ import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(value = {CodeRestController.class, CommonController.class})
-@AutoConfigureRestDocs
-public class CommonDocumentationTest {
-    @Autowired
-    private MockMvc mockMvc;
-
+@WebMvcTest(controllers = {CommonController.class, CodeRestController.class})
+public class CommonDocumentationTest extends ApiDocumentationTest {
     @MockBean
     private CodeQueryService codeQueryService;
 
@@ -46,10 +44,11 @@ public class CommonDocumentationTest {
     @DisplayName("공통 응답 조회")
     public void common() throws Exception {
         // given
+        String url = API_V1 + "/common";
         String documentPath = "common";
 
         // when
-        ResultActions resultActions = mockMvc.perform(get("/v1/common"));
+        ResultActions resultActions = mockMvc.perform(get(url));
 
         // then
         resultActions.andExpect(status().isOk())
@@ -66,11 +65,12 @@ public class CommonDocumentationTest {
     @DisplayName("enum 목록 조회")
     public void enums() throws Exception {
         // given
+        String url = API_V1 + "/codes";
         String documentPath = "code/getCodes";
         given(codeQueryService.getCodeQuery()).willReturn(_codeQueryService.getCodeQuery());
 
         // when
-        ResultActions resultActions = this.mockMvc.perform(get("/v1/codes").accept(MediaType.APPLICATION_JSON));
+        ResultActions resultActions = mockMvc.perform(get(url).accept(MediaType.APPLICATION_JSON));
 
         resultActions.andExpect(status().isOk())
                 .andDo(document(documentPath,
