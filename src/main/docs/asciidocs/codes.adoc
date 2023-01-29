@@ -4,5 +4,5 @@ endif::[]
 
 = Enum List
 
-include::{snippets}/common/enum-response-fields-genders.adoc[]
-include::{snippets}/common/enum-response-fields-address.adoc[]
+include::{snippets}/code/getCodes/enum-response-fields-Gender.adoc[]
+include::{snippets}/code/getCodes/enum-response-fields-Address.adoc[]

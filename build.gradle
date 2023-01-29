@@ -35,6 +35,9 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc' // (5)
+
+    // reflection
+    implementation 'org.reflections:reflections:0.10.2'
 }
 
 tasks.named('test') {
