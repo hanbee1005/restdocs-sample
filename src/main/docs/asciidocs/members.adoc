@@ -21,4 +21,4 @@ include::{snippets}/members/find-by-id/path-parameters.adoc[]
 include::{snippets}/members/find-by-id/http-response.adoc[]
 
 [red big]#Response fields#
-include::{snippets}/members/find-by-id/response-fields.adoc[]
+include::{snippets}/members/find-by-id/response-fields-data.adoc[]
