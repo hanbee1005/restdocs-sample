@@ -295,3 +295,9 @@ this.mockMvc.perform(get("/user/5").accept(MediaType.APPLICATION_JSON))
                                 fieldWithPath("gender").type(JsonFieldType.STRING).description("성별"),
     ...
     ```
+## 참고
+- https://techblog.woowahan.com/2597/
+- https://techblog.woowahan.com/2678/
+- https://github.com/hojinDev/restdocs-sample
+- https://htmlpreview.github.io/?https://github.com/hojinDev/restdocs-sample/blob/master/html/step3.html
+- [개인정리](https://developerbee.tistory.com/250)
